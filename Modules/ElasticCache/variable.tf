@@ -20,8 +20,7 @@ variable "name" {
   type        = string
 }
 
-variable "parameter_group_name"
-{
+variable "parameter_group_name" {
     description = "Name for the Redis parameter Group"
     type        = string
 }
@@ -87,3 +86,9 @@ variable "tags" {
   type        = map(string)
   default     = {}
 }
+
+variable "redis_subnet_group_name" {
+  description = "Name for the Subnet"
+  type        = string
+}
+

@@ -27,7 +27,7 @@ data "aws_ami" "amazon_linux" {
 # Launch configuration and autoscaling group
 ######
 module "asg" {
-    source = "Modules/ASG"
+    source = "./Modules/ASG"
     name = "TestAutoScalingGroup"
     create_lc = true
     lc_name = "TestLaunchConfiguration"
@@ -74,7 +74,7 @@ module "asg" {
 # ELB
 ######
 module "elb" {
-    source = "Modules\ELB"
+    source = "./Modules/ELB"
     name = "TestElasticLoadBalancer"
     subnets         = data.aws_subnet_ids.all.ids
     security_groups = [aws_security_group.autoscaling_security_group.id]
@@ -109,20 +109,14 @@ module "elb" {
 ####################
 
 module "elasticcache" {
-    source = "Modules\ElasticCache"
+    source = "./Modules/ElasticCache"
     security_group_name = "redisexamsecurity"
     name = "redisexamcluster"
     parameter_group_name = "redisexam"
     redis_clusters = "1"
     redis_node_type = "cache.t2.micro"
+    redis_subnet_group_name = "examsubnet"
     subnets = data.aws_subnet_ids.all.ids
     redis_version = "5.0"
-    vpc_id = data.aws_vpc.default.id
-    tags = [
-    {
-        key                 = "Environment"
-        value               = "Exam"
-        propagate_at_launch = true
-    }
-  ]
+    vpc_id = data.aws_vpc.vpc.id
 }

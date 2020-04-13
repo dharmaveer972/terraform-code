@@ -3,6 +3,7 @@ data "aws_vpc" "vpc" {
 }
 
 resource "aws_elasticache_replication_group" "testredis" {
+    replication_group_id          = "Examrediscluster"
     replication_group_description = "Terraform-managed ElastiCache replication group"
     number_cache_clusters         = var.redis_clusters
     node_type                     = var.redis_node_type
@@ -17,7 +18,6 @@ resource "aws_elasticache_replication_group" "testredis" {
     snapshot_window               = var.redis_snapshot_window
     snapshot_retention_limit      = var.redis_snapshot_retention_limit
     tags                          = var.tags
-    Name                          = var.Name
 }
 
 resource "aws_elasticache_parameter_group" "redis_parameter_group" {
